@@ -1,11 +1,19 @@
-import './App.css';
+import './App.scss';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      Deneme
+    <div className='app'>
+      <header className='header'>
+        top
+      </header>
+      <main className='main'>
+        main
+      </main>
+      <footer className='footer'>
+        Footer
+      </footer>
     </div>
-  );
+  )
 }
 
 export default App;

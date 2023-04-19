@@ -1,0 +1,16 @@
+.app {
+  display: flex;
+  min-height: 100vh;
+  color: #000;
+  flex-flow: column;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  background-color: #fff;
+
+  main {
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+  }
+}
