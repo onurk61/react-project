@@ -1,0 +1,14 @@
+.btn {
+  padding: 12px 20px;
+  font-size: 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  background: #F4f4f4;
+  transition: all ease 0.4s;
+
+  &:hover,
+  &:focus {
+    background: #FFF;
+  }
+}

@@ -1,0 +1,11 @@
+.btn-supernova {
+  background: #fecb00;
+  color: #000;
+  font-weight: bold;
+
+  &:hover,
+  &:focus {
+    background: #fecb70;
+    color: #000;
+  }
+}
