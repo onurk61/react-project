@@ -8,9 +8,17 @@
   font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
   background-color: #fff;
 
-  main {
+  .header {
+
+  }
+
+  .main {
     display: flex;
     flex-flow: column;
     flex-grow: 1;
+  }
+
+  .footer {
+    
   }
 }
