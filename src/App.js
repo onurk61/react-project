@@ -4,13 +4,13 @@ const App = () => {
   return (
     <div className='app'>
       <header className='header'>
-        top
+        HEADER
       </header>
       <main className='main'>
-        main
+        MAİN
       </main>
       <footer className='footer'>
-        Footer
+        FOOTER
       </footer>
     </div>
   )
