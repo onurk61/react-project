@@ -1,11 +1,34 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import Input from "../../../UI/Input";
 import Card from "../../../UI/Card";
 import Button from "../../../UI/Button";
 import classes from "./AddUserForm.module.scss";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 const AddUserForm = (props) => {
+  useEffect(() => {
+    const addNewUser = async () => {
+      const payload = {
+        id: Math.random(),
+        firstName: "Onur",
+        lastName: "Kanca",
+        address1: "Salacak İskele Mahallesi",
+        address2: "Muhtar Tahsin Şahin Sokak, No: 14, Daire:3",
+        town: "İstanbul",
+        region: "Üsküdar",
+        country: "Turkey",
+        postCode: "11111",
+        contactNumber: "0555-555-55-55",
+      };
+      await axios.post(
+        "https://react-project-783fb-default-rtdb.firebaseio.com/users.json",
+        payload
+      );
+    };
+
+    return addNewUser;
+  }, []);
   return (
     <div className={classes["form-wrapper"]}>
       <Card className={classes["card-shadow"]}>

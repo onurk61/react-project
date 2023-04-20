@@ -18,18 +18,6 @@ const App = (props) => {
           <Route path="/addUser" element={<AddUserForm />} />
         </Routes>
       </main>
-      {/* <Main>
-        <Routes>
-          <Route path="/usersList" element={<UsersList />} />
-          <Route path="/addUserForm" element={<AddUserForm />} />
-        </Routes>
-      </Main> */}
-      {/* <Routes>
-        <Route path="/" element={<Navigate to="/main" />} />
-        <Route path="/main/*" element={<Main />} />
-        <Route path="/usersList" element={<UsersList />} />
-        <Route path="/addUserForm" element={<AddUserForm />} />
-      </Routes> */}
       <Footer />
     </div>
   );
