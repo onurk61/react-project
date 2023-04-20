@@ -1,9 +1,9 @@
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Home from "./components/Main/Home";
+import Home from './components/Home/Home'
 import { Routes, Route, Navigate } from "react-router-dom";
-import UsersList from "./components/Main/Users/UsersList/UsersList";
-import AddUserForm from "./components/Main/Users/AddUserForm/AddUserForm";
+import UsersList from "./components/Home/Users/UsersList/UsersList";
+import AddUserForm from "./components/Home/Users/AddUserForm/AddUserForm";
 
 import "./App.scss";
 const App = (props) => {

@@ -1,0 +1,70 @@
+.form-wrapper {
+  margin: auto;
+  text-align: center;
+  min-width: 750px;
+
+  .card-shadow {
+    background: #333;
+    color: #fff;
+  }
+
+  .form {
+    display: flex;
+    border-radius: 6px;
+    padding: 20px 50px;
+    flex-direction: column;
+
+    .input-control {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      justify-content: space-between;
+
+      .input-flex {
+        max-width: 50%;
+        flex: 0 0 50%;
+
+        label{
+          text-align: left;
+        }
+      }
+    }
+
+    .title {
+      margin: 0 0 20px 0;
+    }
+
+    .actions-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 20px;
+      margin-top: 40px;
+
+      .btn-primary {
+        background: #0643e5;
+        color: #fff;
+        font-weight: 500;
+        font-size: 18px;
+
+        &:hover,
+        &:focus {
+          background: #5b78da;
+        }
+      }
+
+      .btn-cancel {
+        background: #e62525;
+        color: #fff;
+        font-weight: 500;
+        font-size: 18px;
+
+        &:hover,
+        &:focus {
+          background: #f26262;
+        }
+      }
+    }
+  }
+}

@@ -4,11 +4,12 @@
   border-radius: 6px;
   cursor: pointer;
   border: none;
-  background: #F4f4f4;
+  background: #f4f4f4;
   transition: all ease 0.4s;
+  min-width: 140px;
 
   &:hover,
   &:focus {
-    background: #FFF;
+    background: #fff;
   }
 }

@@ -1,11 +1,23 @@
 .footer {
-    background: #333;
-    color: #fecb00;
-    padding: 30px;
-    font-size: 32px;
-    font-weight: bold;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
+  background: #333;
+  color: #fecb00;
+  padding: 30px;
+  font-size: 32px;
+  font-weight: bold;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0px 0px 13px 4px #fecb00;
+  transition: all ease .4s;
+
+  &:hover,
+  &:focus {
+    color: #D30505;
+    box-shadow: 0px 0px 13px 4px #D30505;
+  }
 }

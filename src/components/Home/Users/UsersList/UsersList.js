@@ -2,7 +2,7 @@ import React from "react";
 import User from "./User/User";
 import classes from "./UsersList.module.scss";
 
-const UsersList = (props) => {
+const UsersList = props => {
   return (
     <ul className={classes["users-list"]}>
       <User />
