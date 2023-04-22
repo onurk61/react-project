@@ -1,4 +1,4 @@
-import { React, useEffect, useRef, useState } from "react";
+import { React, useEffect, useRef } from "react";
 import Input from "../../../UI/Input";
 import Card from "../../../UI/Card";
 import Button from "../../../UI/Button";
@@ -148,7 +148,7 @@ const AddUserForm = (props) => {
       contactNumber: contactNumber,
     };
     if (userId) {
-      dispatch(updateUser(userId));
+      dispatch(updateUser(editUserObj?.current[0], userId));
     } else {
       dispatch(addUser(userData));
     }
