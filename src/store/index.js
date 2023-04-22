@@ -1,14 +1,7 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import userReducer from "../redux/reducers/userReducer";
+import thunk from "redux-thunk";
 
-const userReducer = (state = { users: [] }, action) => {
-  if (action.type === "usersList") {
-    return {
-      users: state.users,
-    };
-  }
-  return state;
-};
-
-const store = createStore(userReducer);
+const store = createStore(userReducer, compose(applyMiddleware(thunk)));
 
 export default store;

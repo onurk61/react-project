@@ -16,16 +16,41 @@
 
     .input-control {
       display: flex;
-      align-items: center;
-      gap: 20px;
       width: 100%;
       justify-content: space-between;
 
       .input-flex {
-        max-width: 50%;
-        flex: 0 0 50%;
+        max-width: 48%;
+        flex: 0 0 48%;
 
-        label{
+        // &:last-child {
+        //   max-width: 100%;
+        //   flex: 0 0 100%;
+        // }
+
+        &:nth-child(2) {
+          margin-left: 20px;
+        }
+
+        :local(.invalid) {
+          input {
+            border: 3px solid #b91f1f;
+            box-shadow: 0 0px 3px 2px #b91f1f;
+          }
+        }
+
+        .error {
+          margin: 0;
+          padding: 0;
+          text-align: left;
+          position: relative;
+          left: 4px;
+          top: 2px;
+          color: red;
+          font-size: 16px;
+        }
+
+        label {
           text-align: left;
         }
       }
@@ -48,6 +73,14 @@
         font-weight: 500;
         font-size: 18px;
 
+        &:disabled,
+        &:disabled:hover,
+        &:disabled:active {
+          background: #ccc;
+          color: #292929;
+          cursor: unset;
+        }
+
         &:hover,
         &:focus {
           background: #5b78da;
@@ -68,3 +101,11 @@
     }
   }
 }
+
+// .btn-primary:disabled,
+// .btn-primary:disabled:hover,
+// .btn-primary:disabled:active {
+//   background: #000 !important;
+//   color: #fff;
+//   cursor: not-allowed;
+// }

@@ -9,7 +9,7 @@
   background: #333;
   color: #fff;
   transition: all ease 0.4s;
-  margin: 5px -5px;
+  margin: 0 -5px;
 
   &:hover,
   &:focus {
@@ -31,7 +31,7 @@
     justify-content: flex-end;
     margin-top: 20px;
     gap: 20px;
-    
+
     .btn-edit {
       background: #0643e5;
       color: #fff;
@@ -54,6 +54,28 @@
       &:focus {
         background: #f26262;
       }
+    }
+  }
+}
+
+.no-data {
+  font-size: 45px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: #e62525;
+  margin-top: 120px;
+  flex-flow: column;
+
+  a {
+    &:link,
+    &:visited,
+    &:focus,
+    &:hover,
+    &:active {
+      color: inherit;
     }
   }
 }

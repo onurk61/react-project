@@ -1,39 +1,28 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useRef } from "react";
 import Button from "../../../../UI/Button";
 import classes from "./User.module.scss";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import { getUsers } from "../../../../../redux/actions/usersActions";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const User = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const userInfo = useSelector((state) => state.users);
+  const usersList = useSelector((state) => state.users);
   const dispatch = useDispatch();
+  const preventSendingRequestTwice = useRef(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getList = async () => {
-      const response = await axios.get(
-        "https://react-project-783fb-default-rtdb.firebaseio.com/users.json"
-      );
+    if (preventSendingRequestTwice.current) {
+      preventSendingRequestTwice.current = false;
+      dispatch(getUsers());
+    }
+  }, [dispatch]);
 
-      if (!response.data) {
-        setIsLoading(true);
-      }
+  const updateUserHandler = (userId) => {
+    navigate(`/AddUser/${userId}`);
+  };
 
-      for (let key in response.data) {
-        userInfo.push({ ...response.data[key], id: key });
-      }
-
-      dispatch({ type: "usersList", users: userInfo });
-    };
-
-    return getList;
-  }, [dispatch,userInfo]);
-
-  if (!userInfo) {
-    return;
-  }
-
-  const users = userInfo.map((user) => {
+  const usersData = usersList?.map((user) => {
     return (
       <li className={classes.user} key={user.id}>
         <span>
@@ -64,7 +53,13 @@ const User = (props) => {
           <strong>Contact Number :</strong> {user.contactNumber}
         </span>
         <div className={classes["actions-wrapper"]}>
-          <Button className={classes["btn-edit"]} type="button">
+          <Button
+            className={classes["btn-edit"]}
+            type="button"
+            onClick={() => {
+              updateUserHandler(user.id);
+            }}
+          >
             Edit
           </Button>
           <Button className={classes["btn-delete"]} type="button">
@@ -74,7 +69,21 @@ const User = (props) => {
       </li>
     );
   });
-  return <>{isLoading && users}</>;
+
+  return (
+    <>
+      {usersData?.length === 0 && (
+        <div className={classes["no-data"]}>
+          <span>No User Found...</span>
+          <span>
+            Please go to <NavLink to="/addUser">Add User</NavLink> Page and Add
+            New User !!!
+          </span>
+        </div>
+      )}
+      {usersData?.length > 0 && usersData}
+    </>
+  );
 };
 
 export default User;
