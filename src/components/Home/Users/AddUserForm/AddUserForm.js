@@ -1,11 +1,15 @@
-import { React, useEffect, useRef } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import Input from "../../../UI/Input";
 import Card from "../../../UI/Card";
 import Button from "../../../UI/Button";
 import classes from "./AddUserForm.module.scss";
 import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, updateUser } from "../../../../redux/actions/usersActions";
+import {
+  addUser,
+  updateUser,
+  getUsers,
+} from "../../../../redux/actions/usersActions";
 import useInput from "../../../../hooks/use-input";
 
 const AddUserForm = (props) => {
@@ -13,6 +17,8 @@ const AddUserForm = (props) => {
   const dispatch = useDispatch();
   const stopTwiceRequest = useRef(false);
   const { userId } = useParams();
+  const editUserObj = useRef();
+  editUserObj.current = usersList?.filter((item) => item.id === userId);
 
   useEffect(() => {
     if (stopTwiceRequest.current) {
@@ -20,6 +26,10 @@ const AddUserForm = (props) => {
       fetchData();
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
 
   const validationForInput = (value) => value.trim() !== "";
   const {

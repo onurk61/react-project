@@ -1,11 +1,8 @@
-import { SET_USERS, ADD_USER, UPDATE_USER } from "../actionTypes/users";
+import { SET_USERS, ADD_USER, UPDATE_USER,DELETE_USER } from "../actionTypes/users";
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import axios from "axios";
 
 export const getUsers = () => async (dispatch) => {
-  const MySwal = withReactContent(Swal);
-
   try {
     const { data } = await axios.get(
       "https://react-project-783fb-default-rtdb.firebaseio.com/users.json"
@@ -17,7 +14,7 @@ export const getUsers = () => async (dispatch) => {
     }
     dispatch({ type: SET_USERS, payload: arr });
   } catch (error) {
-    MySwal.fire({
+    Swal.fire({
       title: error.message,
       text: "Please Try Again !",
       icon: "error",
@@ -28,26 +25,24 @@ export const getUsers = () => async (dispatch) => {
 };
 
 export const addUser = (data) => async (dispatch) => {
-  const MySwal = withReactContent(Swal);
-
   try {
     const response = await axios.post(
       "https://react-project-783fb-default-rtdb.firebaseio.com/users.json",
       data
-    )
+    );
 
     if (response.status === 200) {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "User Information Updated Successfully !",
+        title: "New User Added Successfully !",
         showConfirmButton: false,
         timer: 2300,
       });
       dispatch({ type: ADD_USER, payload: response });
     }
   } catch (error) {
-    MySwal.fire({
+    Swal.fire({
       title: error.message,
       text: "Please Try Again !",
       icon: "error",
@@ -58,7 +53,6 @@ export const addUser = (data) => async (dispatch) => {
 };
 
 export const updateUser = (userId) => async (dispatch) => {
-  const MySwal = withReactContent(Swal);
   // try {
   //   const response = await axios.put(
   //     `https://react-project-783fb-default-rtdb.firebaseio.com/users/-NTaCm5pTOw7AYx3w1Zg.json`,
@@ -74,7 +68,6 @@ export const updateUser = (userId) => async (dispatch) => {
   //       contactNumber: "conta23123ctNumber",
   //     }
   //   );
-
   //   if (response.status === 200) {
   //     Swal.fire({
   //       position: "center",
@@ -86,7 +79,7 @@ export const updateUser = (userId) => async (dispatch) => {
   //     dispatch({ type: UPDATE_USER, payload: response });
   //   }
   // } catch (error) {
-  //   MySwal.fire({
+  //   Swal.fire({
   //     title: error.message,
   //     text: "Please Try Again !",
   //     icon: "error",
@@ -96,6 +89,47 @@ export const updateUser = (userId) => async (dispatch) => {
   // }
 };
 
-const usersActions = { getUsers, addUser, updateUser };
+export const deleteUser = (userId) => async (dispatch) => {
+  try {
+    await axios
+      .delete(
+        `https://react-project-783fb-default-rtdb.firebaseio.com/users/${userId}.json`
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "User Deleted Successfully !",
+            showConfirmButton: false,
+            timer: 2300,
+          });
+          dispatch({ type: DELETE_USER });
+          dispatch(getUsers());
+        }
+      })
+      .catch((error) => {
+        if (error) {
+          Swal.fire({
+            title: error.response.data.error,
+            text: "Please Try Again !",
+            icon: "error",
+            showConfirmButton: false,
+            timer: 2300,
+          });
+        }
+      });
+  } catch (error) {
+    Swal.fire({
+      title: error,
+      text: "Please Try Again !",
+      icon: "error",
+      showConfirmButton: false,
+      timer: 4000,
+    });
+  }
+};
+
+const usersActions = { getUsers, addUser, updateUser, deleteUser };
 
 export default usersActions;

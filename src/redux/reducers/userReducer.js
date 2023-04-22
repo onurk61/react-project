@@ -1,4 +1,9 @@
-import { SET_USERS, ADD_USER, UPDATE_USER } from "../actionTypes/users";
+import {
+  SET_USERS,
+  ADD_USER,
+  UPDATE_USER,
+  DELETE_USER,
+} from "../actionTypes/users";
 
 const initialState = {
   users: [],
@@ -14,10 +19,9 @@ const userReducer = (state = initialState, action) => {
     case ADD_USER:
       return "";
     case UPDATE_USER:
-      return {
-        ...state,
-        users: action.payload,
-      };
+      return { ...state };
+    case DELETE_USER:
+      return { ...state };
     default:
       return state;
   }
