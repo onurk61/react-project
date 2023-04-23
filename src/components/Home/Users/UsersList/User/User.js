@@ -50,33 +50,35 @@ const User = (props) => {
   const usersData = usersList?.map((user) => {
     return (
       <li className={classes.user} key={user.id}>
-        <span>
-          <strong>First Name :</strong> {user.firstName}
-        </span>
-        <span>
-          <strong>Last Name :</strong> {user.lastName}
-        </span>
-        <span>
-          <strong>Address 1 :</strong> {user.address1}
-        </span>
-        <span>
-          <strong>Address 2 :</strong> {user.address2}
-        </span>
-        <span>
-          <strong>Town :</strong> {user.town}
-        </span>
-        <span>
-          <strong>Region :</strong> {user.region}
-        </span>
-        <span>
-          <strong>Country :</strong> {user.country}
-        </span>
-        <span>
-          <strong>Post Code :</strong> {user.postCode}
-        </span>
-        <span>
-          <strong>Contact Number :</strong> {user.contactNumber}
-        </span>
+        <div className={classes["content-wrapper"]}>
+          <span>
+            <strong>First Name :</strong> {user.firstName}
+          </span>
+          <span>
+            <strong>Last Name :</strong> {user.lastName}
+          </span>
+          <span>
+            <strong>Address 1 :</strong> {user.address1}
+          </span>
+          <span>
+            <strong>Address 2 :</strong> {user.address2}
+          </span>
+          <span>
+            <strong>Town :</strong> {user.town}
+          </span>
+          <span>
+            <strong>Region :</strong> {user.region}
+          </span>
+          <span>
+            <strong>Country :</strong> {user.country}
+          </span>
+          <span>
+            <strong>Post Code :</strong> {user.postCode}
+          </span>
+          <span>
+            <strong>Contact Number :</strong> {user.contactNumber}
+          </span>
+        </div>
         <div className={classes["actions-wrapper"]}>
           <Button
             className={classes["btn-edit"]}
@@ -103,7 +105,7 @@ const User = (props) => {
 
   return (
     <>
-      {(usersData?.length === 0 && !loading) && (
+      {usersData?.length === 0 && !loading && (
         <div className={classes["no-data"]}>
           <span>No User Found...</span>
           <span>

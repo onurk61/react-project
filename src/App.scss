@@ -21,13 +21,23 @@ main {
 .swal2-popup {
   font-size: 1.6rem !important;
   font-family: Georgia, serif;
+
+  @media (min-width: 325px) and (max-width: 575px) {
+    font-size: 1rem !important;
+  }
+
+  @media (min-width: 576px) and (max-width: 767px) {
+    font-size: 1.3rem !important;
+  }
 }
 
-.loading-spinner{
+.loading-spinner {
   position: absolute;
   left: 0;
   top: 40%;
   right: 0;
   margin: 0 auto;
   z-index: 111;
+  width: 7px;
+  height: 7px;
 }

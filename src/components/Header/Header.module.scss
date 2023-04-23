@@ -1,26 +1,48 @@
 .header {
   background: #333;
   color: #fff;
-  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 22px;
-  font-weight: bold;
-  box-shadow: 0px 0px 60px 8px #fecb00;
   position: fixed;
   left: 0;
   top: 0;
   right: 0;
+  box-shadow: 0px 0px 60px 8px #fecb00;
+  font-weight: bold;
+  padding: 20px 13px;
+
+  @media (min-width: 325px) and (max-width: 575px) {
+  box-shadow: 0px 0px 30px 4px #fecb00;
+
+  }
+
+  @media (min-width: 576px) and (max-width: 767px){
+    padding: 20px;
+  }
 
   .btn-home {
-    background: #1CE325;
+    background: #1ce325;
     color: #000;
     font-weight: bold;
+    max-width: 140px;
+    min-width: 140px;
 
     &:hover,
     &:focus {
-      background: #8DE391;
+      background: #8de391;
+    }
+
+    @media (min-width: 325px) and (max-width: 575px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 576px) and (max-width: 767px) {
+      font-size: 18px;
+    }
+
+    @media (min-width: 576px) and (max-width: 767px) {
+      font-size: 18px;
     }
   }
 }

@@ -21,8 +21,6 @@ const loadingSpinner = (
     className="loading-spinner"
     type="spin"
     color="#333"
-    height={"7%"}
-    width={"7%"}
   />
 );
 

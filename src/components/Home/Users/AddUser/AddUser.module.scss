@@ -5,7 +5,10 @@
 
   &:hover,
   &:focus {
-    background: #F6D349;
+    background: #f6d349;
     color: #000;
+  }
+  @media (min-width: 325px) and (max-width: 576px) {
+    font-size: 16px;
   }
 }

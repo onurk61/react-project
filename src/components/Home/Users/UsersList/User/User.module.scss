@@ -10,6 +10,12 @@
   color: #fff;
   transition: all ease 0.4s;
   margin: 0 -5px;
+  height: auto;
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-direction: column;
 
   &:hover,
   &:focus {
@@ -17,14 +23,44 @@
     outline: none;
   }
 
-  span {
-    font-size: 20px;
-    strong {
-      font-size: 22px;
-      color: #fecb00;
-    }
+  @media (min-width: 325px) and (max-width: 575px) {
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 
+  @media (min-width: 576px) and (max-width: 992px) {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .content-wrapper {
+    align-self: flex-start;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
+
+    span {
+      font-size: 20px;
+      word-break: break-all;
+
+      @media (min-width: 325px) and (max-width: 575px) {
+        font-size: 15px;
+      }
+
+      @media (min-width: 576px) and (max-width: 767px) {
+        font-size: 17px;
+      }
+
+      strong {
+        font-size: 22px;
+        color: #fecb00;
+
+        @media (min-width: 325px) and (max-width: 767px) {
+          font-size: 18px;
+        }
+      }
+    }
+  }
   .actions-wrapper {
     display: flex;
     align-items: center;
@@ -32,15 +68,28 @@
     margin-top: 20px;
     gap: 20px;
 
+    @media (min-width: 325px) and (max-width: 575px) {
+      gap: 15px;
+    }
+
     .btn-edit {
       background: #0643e5;
       color: #fff;
       font-weight: 500;
       font-size: 18px;
+      min-width: 140px;
 
       &:hover,
       &:focus {
         background: #5b78da;
+      }
+
+      @media (min-width: 325px) and (max-width: 575px) {
+        min-width: 117px;
+      }
+
+      @media (min-width: 325px) and (max-width: 767px) {
+        min-width: 117px;
       }
     }
 
@@ -49,10 +98,19 @@
       color: #fff;
       font-weight: 500;
       font-size: 18px;
+      min-width: 140px;
 
       &:hover,
       &:focus {
         background: #f26262;
+      }
+
+      @media (min-width: 325px) and (max-width: 575px) {
+        min-width: 117px;
+      }
+
+      @media (min-width: 325px) and (max-width: 767px) {
+        min-width: 100px;
       }
     }
   }
