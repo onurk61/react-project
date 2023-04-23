@@ -1,4 +1,4 @@
-import { React, useEffect, useRef } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import Input from "../../../UI/Input";
 import Card from "../../../UI/Card";
 import Button from "../../../UI/Button";
@@ -11,14 +11,15 @@ import {
   getUsers,
 } from "../../../../redux/actions/usersActions";
 import useInput from "../../../../hooks/use-input";
+import ReactLoading from "react-loading";
 
 const AddUserForm = (props) => {
   const usersList = useSelector((state) => state.users);
+  const loading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
   const stopTwiceRequest = useRef(false);
   const { userId } = useParams();
-  const editUserObj = useRef();
-  editUserObj.current = usersList?.filter((item) => item.id === userId);
+  const [editUserObj, setEditUserObj] = useState([]);
 
   useEffect(() => {
     if (stopTwiceRequest.current) {
@@ -30,6 +31,16 @@ const AddUserForm = (props) => {
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
+
+  useEffect(() => {
+    const getUpdatedData = async () => {
+      if (!loading) {
+        setEditUserObj(usersList?.filter((item) => item.id === userId));
+      }
+    };
+
+    getUpdatedData();
+  }, [usersList]);
 
   const validationForInput = (value) => value.trim() !== "";
   const {
@@ -136,20 +147,31 @@ const AddUserForm = (props) => {
   const postCodeInputClasses = postCodeInputHasError ? classes["invalid"] : "";
 
   async function fetchData() {
-    const userData = {
-      firstName: firstName,
-      lastName: lastName,
-      address1: address1,
-      address2: address2,
-      town: town,
-      region: region,
-      country: country,
-      postCode: postCode,
-      contactNumber: contactNumber,
-    };
     if (userId) {
-      dispatch(updateUser(editUserObj?.current[0], userId));
+      const updatedDate = {
+        firstName: firstName,
+        lastName: lastName,
+        address1: address1,
+        address2: address2,
+        town: town,
+        region: region,
+        country: country,
+        postCode: postCode,
+        contactNumber: contactNumber,
+      };
+      dispatch(updateUser(updatedDate, userId));
     } else {
+      const userData = {
+        firstName: firstName,
+        lastName: lastName,
+        address1: address1,
+        address2: address2,
+        town: town,
+        region: region,
+        country: country,
+        postCode: postCode,
+        contactNumber: contactNumber,
+      };
       dispatch(addUser(userData));
     }
   }
@@ -181,188 +203,214 @@ const AddUserForm = (props) => {
   };
 
   return (
-    <div className={classes["form-wrapper"]}>
-      <Card className={classes["card-shadow"]}>
-        <form className={classes.form} onSubmit={submitHandler}>
-          <h1 className={classes.title}>
-            {userId ? "Update" : "Add New"} User
-          </h1>
-          <div className={classes["input-control"]}>
-            <div className={classes["input-flex"]}>
-              <div className={firstNameInputClasses}>
-                <Input
-                  label="First Name"
-                  input={{
-                    id: "firstName",
-                    value: firstName,
-                    onChange: firstNameChangeHandler,
-                    onBlur: firstNameBlurHandler,
-                    type: "text",
-                  }}
-                />
+    <>
+      {loading && (
+        <ReactLoading
+          className="loading-spinner"
+          type="spin"
+          color="#333"
+          height={"7%"}
+          width={"7%"}
+        />
+      )}
+      {!loading && (
+        <div className={classes["form-wrapper"]}>
+          <Card className={classes["card-shadow"]}>
+            <form className={classes.form} onSubmit={submitHandler}>
+              <h1 className={classes.title}>
+                {userId ? "Update" : "Add New"} User
+              </h1>
+              <div className={classes["input-control"]}>
+                <div className={classes["input-flex"]}>
+                  <div className={firstNameInputClasses}>
+                    <Input
+                      label="First Name"
+                      input={{
+                        id: "firstName",
+                        value: firstName || "",
+                        onChange: firstNameChangeHandler,
+                        onBlur: firstNameBlurHandler,
+                        type: "text",
+                      }}
+                    />
+                  </div>
+                  {firstNameInputHasError && (
+                    <p className={classes.error}>
+                      First Name must not be empty !
+                    </p>
+                  )}
+                </div>
+                <div className={classes["input-flex"]}>
+                  <div className={lastNameInputClasses}>
+                    <Input
+                      label="Last Name"
+                      input={{
+                        id: "lastName",
+                        value: lastName,
+                        onChange: LastNameChangeHandler,
+                        onBlur: LastNameBlurHandler,
+                        type: "text",
+                      }}
+                    />
+                  </div>
+                  {lastNameInputHasError && (
+                    <p className={classes.error}>
+                      First Name must not be empty !
+                    </p>
+                  )}
+                </div>
               </div>
-              {firstNameInputHasError && (
-                <p className={classes.error}>First Name must not be empty !</p>
-              )}
-            </div>
-            <div className={classes["input-flex"]}>
-              <div className={lastNameInputClasses}>
-                <Input
-                  label="Last Name"
-                  input={{
-                    id: "lastName",
-                    value: lastName,
-                    onChange: LastNameChangeHandler,
-                    onBlur: LastNameBlurHandler,
-                    type: "text",
-                  }}
-                />
+              <div className={classes["input-control"]}>
+                <div className={classes["input-flex"]}>
+                  <div className={address1InputClasses}>
+                    <Input
+                      label="Address 1"
+                      input={{
+                        id: "address1",
+                        type: "text",
+                        value: address1,
+                        onChange: address1ChangeHandler,
+                        onBlur: address1BlurHandler,
+                      }}
+                    />
+                  </div>
+                  {address1InputHasError && (
+                    <p className={classes.error}>
+                      Address 1 must not be empty !
+                    </p>
+                  )}
+                </div>
+                <div className={classes["input-flex"]}>
+                  <div className={address2InputClasses}>
+                    <Input
+                      label="Address 2"
+                      input={{
+                        id: "address2",
+                        type: "text",
+                        value: address2,
+                        onChange: address2ChangeHandler,
+                        onBlur: address2BlurHandler,
+                      }}
+                    />
+                  </div>
+                  {address2InputHasError && (
+                    <p className={classes.error}>
+                      Address 2 must not be empty !
+                    </p>
+                  )}
+                </div>
               </div>
-              {lastNameInputHasError && (
-                <p className={classes.error}>First Name must not be empty !</p>
-              )}
-            </div>
-          </div>
-          <div className={classes["input-control"]}>
-            <div className={classes["input-flex"]}>
-              <div className={address1InputClasses}>
-                <Input
-                  label="Address 1"
-                  input={{
-                    id: "address1",
-                    type: "text",
-                    value: address1,
-                    onChange: address1ChangeHandler,
-                    onBlur: address1BlurHandler,
-                  }}
-                />
+              <div className={classes["input-control"]}>
+                <div className={classes["input-flex"]}>
+                  <div className={townInputClasses}>
+                    <Input
+                      label="Town"
+                      input={{
+                        id: "town",
+                        type: "text",
+                        value: town,
+                        onChange: townChangeHandler,
+                        onBlur: townBlurHandler,
+                      }}
+                    />
+                  </div>
+                  {townInputHasError && (
+                    <p className={classes.error}>Town must not be empty !</p>
+                  )}
+                </div>
+                <div className={classes["input-flex"]}>
+                  <div className={regionInputClasses}>
+                    <Input
+                      label="Region"
+                      input={{
+                        id: "region",
+                        type: "text",
+                        value: region,
+                        onChange: regionChangeHandler,
+                        onBlur: regionBlurHandler,
+                      }}
+                    />
+                  </div>
+                  {regionInputHasError && (
+                    <p className={classes.error}>Region must not be empty !</p>
+                  )}
+                </div>
               </div>
-              {address1InputHasError && (
-                <p className={classes.error}>Address 1 must not be empty !</p>
-              )}
-            </div>
-            <div className={classes["input-flex"]}>
-              <div className={address2InputClasses}>
-                <Input
-                  label="Address 2"
-                  input={{
-                    id: "address2",
-                    type: "text",
-                    value: address2,
-                    onChange: address2ChangeHandler,
-                    onBlur: address2BlurHandler,
-                  }}
-                />
+              <div className={classes["input-control"]}>
+                <div className={classes["input-flex"]}>
+                  <div className={countryInputClasses}>
+                    <Input
+                      label="Country"
+                      input={{
+                        id: "country",
+                        type: "text",
+                        value: country,
+                        onChange: countryChangeHandler,
+                        onBlur: countryBlurHandler,
+                      }}
+                    />
+                  </div>
+                  {countryInputHasError && (
+                    <p className={classes.error}>Country must not be empty !</p>
+                  )}
+                </div>
+                <div className={classes["input-flex"]}>
+                  <div className={postCodeInputClasses}>
+                    <Input
+                      label="Post Code"
+                      input={{
+                        id: "postCode",
+                        type: "text",
+                        value: postCode,
+                        onChange: postCodeChangeHandler,
+                        onBlur: postCodeBlurHandler,
+                      }}
+                    />
+                  </div>
+                  {postCodeInputHasError && (
+                    <p className={classes.error}>
+                      Post Code must not be empty !
+                    </p>
+                  )}
+                </div>
               </div>
-              {address2InputHasError && (
-                <p className={classes.error}>Address 2 must not be empty !</p>
-              )}
-            </div>
-          </div>
-          <div className={classes["input-control"]}>
-            <div className={classes["input-flex"]}>
-              <div className={townInputClasses}>
-                <Input
-                  label="Town"
-                  input={{
-                    id: "town",
-                    type: "text",
-                    value: town,
-                    onChange: townChangeHandler,
-                    onBlur: townBlurHandler,
-                  }}
-                />
+              <div className={classes["input-control"]}>
+                <div className={classes["input-flex"]}>
+                  <div className={contactNumberInputClasses}>
+                    <Input
+                      label="Contact Number"
+                      input={{
+                        id: "contactNumber",
+                        value: contactNumber,
+                        onChange: contactNumberChangeHandler,
+                        onBlur: contactNumberBlurHandler,
+                        type: "text",
+                      }}
+                    />
+                  </div>
+                  {contactNumberInputHasError && (
+                    <p className={classes.error}>
+                      Contact Number must not be empty !
+                    </p>
+                  )}
+                </div>
               </div>
-              {townInputHasError && (
-                <p className={classes.error}>Town must not be empty !</p>
-              )}
-            </div>
-            <div className={classes["input-flex"]}>
-              <div className={regionInputClasses}>
-                <Input
-                  label="Region"
-                  input={{
-                    id: "region",
-                    type: "text",
-                    value: region,
-                    onChange: regionChangeHandler,
-                    onBlur: regionBlurHandler,
-                  }}
-                />
+              <div className={classes["actions-wrapper"]}>
+                <NavLink to="/">
+                  <Button className={classes["btn-cancel"]}>Cancel</Button>
+                </NavLink>
+                <Button
+                  className={classes["btn-primary"]}
+                  disabled={!formIsValid}
+                >
+                  {userId ? "Update" : "Save"}
+                </Button>
               </div>
-              {regionInputHasError && (
-                <p className={classes.error}>Region must not be empty !</p>
-              )}
-            </div>
-          </div>
-          <div className={classes["input-control"]}>
-            <div className={classes["input-flex"]}>
-              <div className={countryInputClasses}>
-                <Input
-                  label="Country"
-                  input={{
-                    id: "country",
-                    type: "text",
-                    value: country,
-                    onChange: countryChangeHandler,
-                    onBlur: countryBlurHandler,
-                  }}
-                />
-              </div>
-              {countryInputHasError && (
-                <p className={classes.error}>Country must not be empty !</p>
-              )}
-            </div>
-            <div className={classes["input-flex"]}>
-              <div className={postCodeInputClasses}>
-                <Input
-                  label="Post Code"
-                  input={{
-                    id: "postCode",
-                    type: "text",
-                    value: postCode,
-                    onChange: postCodeChangeHandler,
-                    onBlur: postCodeBlurHandler,
-                  }}
-                />
-              </div>
-              {postCodeInputHasError && (
-                <p className={classes.error}>Post Code must not be empty !</p>
-              )}
-            </div>
-          </div>
-          <div className={classes["input-control"]}>
-            <div className={classes["input-flex"]}>
-              <div className={contactNumberInputClasses}>
-                <Input
-                  label="Contact Number"
-                  input={{
-                    id: "contactNumber",
-                    value: contactNumber,
-                    onChange: contactNumberChangeHandler,
-                    onBlur: contactNumberBlurHandler,
-                    type: "text",
-                  }}
-                />
-              </div>
-              {contactNumberInputHasError && (
-                <p className={classes.error}>
-                  Contact Number must not be empty !
-                </p>
-              )}
-            </div>
-          </div>
-          <div className={classes["actions-wrapper"]}>
-            <NavLink to="/">
-              <Button className={classes["btn-cancel"]}>Cancel</Button>
-            </NavLink>
-            <Button className={classes["btn-primary"]} disabled={!formIsValid}>
-              {userId ? "Update" : "Save"}
-            </Button>
-          </div>
-        </form>
-      </Card>
-    </div>
+            </form>
+          </Card>
+        </div>
+      )}
+    </>
   );
 };
 

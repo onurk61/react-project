@@ -7,6 +7,7 @@ import {
 
 const initialState = {
   users: [],
+  loading: true
 };
 
 const userReducer = (state = initialState, action) => {
@@ -15,13 +16,14 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         users: action.payload,
+        loading: false
       };
     case ADD_USER:
-      return { ...state };
+      return { ...state, loading: false };
     case UPDATE_USER:
-      return { ...state, users: action.payload };
+      return { ...state, users: action.payload, loading: false };
     case DELETE_USER:
-      return { ...state };
+      return { ...state , loading: false};
     default:
       return state;
   }

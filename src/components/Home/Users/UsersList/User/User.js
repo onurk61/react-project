@@ -2,12 +2,17 @@ import { React, useEffect, useRef } from "react";
 import Button from "../../../../UI/Button";
 import classes from "./User.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { getUsers, deleteUser } from "../../../../../redux/actions/usersActions";
+import {
+  getUsers,
+  deleteUser,
+} from "../../../../../redux/actions/usersActions";
 import { NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import ReactLoading from "react-loading";
 
 const User = (props) => {
   const usersList = useSelector((state) => state.users);
+  const loading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
   const preventSendingRequestTwice = useRef(true);
   const navigate = useNavigate();
@@ -18,6 +23,8 @@ const User = (props) => {
       dispatch(getUsers());
     }
   }, [dispatch]);
+
+  useEffect(() => {}, []);
 
   const updateUserHandler = (userId) => {
     navigate(`/AddUser/${userId}`);
@@ -32,14 +39,14 @@ const User = (props) => {
       confirmButtonText: "Yes",
       showCancelButton: true,
       reverseButtons: true,
-      cancelButtonColor: '#D30505',
-      confirmButtonColor: '#0643e5',
+      cancelButtonColor: "#D30505",
+      confirmButtonColor: "#0643e5",
     }).then((result) => {
-      if(result.isConfirmed){
-        dispatch(deleteUser(userId))
+      if (result.isConfirmed) {
+        dispatch(deleteUser(userId));
       }
-    })  
-  }
+    });
+  };
 
   const usersData = usersList?.map((user) => {
     return (
@@ -81,9 +88,13 @@ const User = (props) => {
           >
             Edit
           </Button>
-          <Button className={classes["btn-delete"]} type="button" onClick={() => {
-            deleteUserHandler(user.id)
-          }}>
+          <Button
+            className={classes["btn-delete"]}
+            type="button"
+            onClick={() => {
+              deleteUserHandler(user.id);
+            }}
+          >
             Delete
           </Button>
         </div>
@@ -93,7 +104,16 @@ const User = (props) => {
 
   return (
     <>
-      {usersData?.length === 0 && (
+      {loading && (
+        <ReactLoading
+          className="loading-spinner"
+          type="spin"
+          color="#333"
+          height={"7%"}
+          width={"7%"}
+        />
+      )}
+      {usersData?.length === 0 && !loading && (
         <div className={classes["no-data"]}>
           <span>No User Found...</span>
           <span>
@@ -102,7 +122,7 @@ const User = (props) => {
           </span>
         </div>
       )}
-      {usersData?.length > 0 && usersData}
+      {!loading && usersData?.length > 0 && usersData}
     </>
   );
 };
