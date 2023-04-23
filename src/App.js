@@ -11,7 +11,7 @@ const App = (props) => {
   return (
     <div className="app">
       <Header />
-      <main>
+      <main data-testid='main'>
         <Routes>
           <Route path="/" element={<Navigate to="home" />} />
           <Route path="/home" element={<Home />} />
