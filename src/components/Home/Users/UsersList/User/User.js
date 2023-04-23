@@ -8,7 +8,6 @@ import {
 } from "../../../../../redux/actions/usersActions";
 import { NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import ReactLoading from "react-loading";
 
 const User = (props) => {
   const usersList = useSelector((state) => state.users);
@@ -104,16 +103,7 @@ const User = (props) => {
 
   return (
     <>
-      {loading && (
-        <ReactLoading
-          className="loading-spinner"
-          type="spin"
-          color="#333"
-          height={"7%"}
-          width={"7%"}
-        />
-      )}
-      {usersData?.length === 0 && !loading && (
+      {(usersData?.length === 0 && !loading) && (
         <div className={classes["no-data"]}>
           <span>No User Found...</span>
           <span>
@@ -122,7 +112,7 @@ const User = (props) => {
           </span>
         </div>
       )}
-      {!loading && usersData?.length > 0 && usersData}
+      {usersData?.length > 0 && usersData}
     </>
   );
 };

@@ -11,7 +11,6 @@ import {
   getUsers,
 } from "../../../../redux/actions/usersActions";
 import useInput from "../../../../hooks/use-input";
-import ReactLoading from "react-loading";
 
 const AddUserForm = (props) => {
   const usersList = useSelector((state) => state.users);
@@ -204,15 +203,6 @@ const AddUserForm = (props) => {
 
   return (
     <>
-      {loading && (
-        <ReactLoading
-          className="loading-spinner"
-          type="spin"
-          color="#333"
-          height={"7%"}
-          width={"7%"}
-        />
-      )}
       {!loading && (
         <div className={classes["form-wrapper"]}>
           <Card className={classes["card-shadow"]}>
