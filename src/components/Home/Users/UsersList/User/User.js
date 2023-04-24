@@ -23,8 +23,6 @@ const User = (props) => {
     }
   }, [dispatch]);
 
-  useEffect(() => {}, []);
-
   const updateUserHandler = (userId) => {
     navigate(`/AddUser/${userId}`);
   };

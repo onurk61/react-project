@@ -97,7 +97,7 @@ export const updateUser = (user, userId) => async (dispatch) => {
             showConfirmButton: false,
             timer: 2300,
           });
-          dispatch({ type: UPDATE_USER, payload: response });
+          dispatch({ type: UPDATE_USER, payload: response.data });
         }
       })
       .catch((error) => {

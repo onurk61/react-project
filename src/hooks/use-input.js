@@ -16,7 +16,7 @@ const inputStateReducer = (state, action) => {
 
   if (action.type === "RESET") {
     return {
-      value: "",
+      value: '',
       isTouched: false,
     };
   }

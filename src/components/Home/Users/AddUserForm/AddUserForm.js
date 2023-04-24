@@ -19,6 +19,7 @@ const AddUserForm = (props) => {
   const stopTwiceRequest = useRef(false);
   const { userId } = useParams();
   const [editUserObj, setEditUserObj] = useState([]);
+  const newVal = useRef();
 
   useEffect(() => {
     if (stopTwiceRequest.current) {
@@ -35,11 +36,13 @@ const AddUserForm = (props) => {
     const getUpdatedData = async () => {
       if (!loading) {
         setEditUserObj(usersList?.filter((item) => item.id === userId));
+      } else {
+        setEditUserObj([]);
       }
     };
 
     getUpdatedData();
-  }, [usersList]);
+  }, [loading]);
 
   const validationForInput = (value) => value.trim() !== "";
   const {
@@ -214,10 +217,13 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={firstNameInputClasses}>
                     <Input
+                      ref={newVal}
                       label="First Name"
                       input={{
                         id: "firstName",
-                        value: firstName || "",
+                        defaultValue: userId
+                          ? editUserObj[0]?.firstName
+                          : firstName,
                         onChange: firstNameChangeHandler,
                         onBlur: firstNameBlurHandler,
                         type: "text",
@@ -233,10 +239,13 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={lastNameInputClasses}>
                     <Input
+                      ref={newVal}
                       label="Last Name"
                       input={{
                         id: "lastName",
-                        value: lastName,
+                        defaultValue: userId
+                          ? editUserObj[0]?.lastName
+                          : lastName,
                         onChange: LastNameChangeHandler,
                         onBlur: LastNameBlurHandler,
                         type: "text",
@@ -254,11 +263,14 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={address1InputClasses}>
                     <Input
+                      ref={newVal}
                       label="Address 1"
                       input={{
                         id: "address1",
                         type: "text",
-                        value: address1,
+                        defaultValue: userId
+                          ? editUserObj[0]?.address1
+                          : address1,
                         onChange: address1ChangeHandler,
                         onBlur: address1BlurHandler,
                       }}
@@ -273,11 +285,14 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={address2InputClasses}>
                     <Input
+                      ref={newVal}
                       label="Address 2"
                       input={{
                         id: "address2",
                         type: "text",
-                        value: address2,
+                        defaultValue: userId
+                          ? editUserObj[0]?.address2
+                          : address2,
                         onChange: address2ChangeHandler,
                         onBlur: address2BlurHandler,
                       }}
@@ -294,11 +309,12 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={townInputClasses}>
                     <Input
+                      ref={newVal}
                       label="Town"
                       input={{
                         id: "town",
                         type: "text",
-                        value: town,
+                        defaultValue: userId ? editUserObj[0]?.town : town,
                         onChange: townChangeHandler,
                         onBlur: townBlurHandler,
                       }}
@@ -311,11 +327,12 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={regionInputClasses}>
                     <Input
+                      ref={newVal}
                       label="Region"
                       input={{
                         id: "region",
                         type: "text",
-                        value: region,
+                        defaultValue: userId ? editUserObj[0]?.region : region,
                         onChange: regionChangeHandler,
                         onBlur: regionBlurHandler,
                       }}
@@ -330,11 +347,14 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={countryInputClasses}>
                     <Input
+                      ref={newVal}
                       label="Country"
                       input={{
                         id: "country",
                         type: "text",
-                        value: country,
+                        defaultValue: userId
+                          ? editUserObj[0]?.country
+                          : country,
                         onChange: countryChangeHandler,
                         onBlur: countryBlurHandler,
                       }}
@@ -347,11 +367,14 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={postCodeInputClasses}>
                     <Input
+                      ref={newVal}
                       label="Post Code"
                       input={{
                         id: "postCode",
                         type: "text",
-                        value: postCode,
+                        defaultValue: userId
+                          ? editUserObj[0]?.postCode
+                          : postCode,
                         onChange: postCodeChangeHandler,
                         onBlur: postCodeBlurHandler,
                       }}
@@ -368,10 +391,13 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={contactNumberInputClasses}>
                     <Input
+                      ref={newVal}
                       label="Contact Number"
                       input={{
                         id: "contactNumber",
-                        value: contactNumber,
+                        defaultValue: userId
+                          ? editUserObj[0]?.contactNumber
+                          : contactNumber,
                         onChange: contactNumberChangeHandler,
                         onBlur: contactNumberBlurHandler,
                         type: "text",
