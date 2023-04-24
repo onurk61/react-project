@@ -19,7 +19,15 @@ const AddUserForm = (props) => {
   const stopTwiceRequest = useRef(false);
   const { userId } = useParams();
   const [editUserObj, setEditUserObj] = useState([]);
-  const newVal = useRef();
+  const changedFirstName = useRef("");
+  const changedLastName = useRef();
+  const changedAddress1 = useRef();
+  const changedAddress2 = useRef();
+  const changedTown = useRef();
+  const changedRegion = useRef();
+  const changedCountry = useRef();
+  const changedContactNumber = useRef();
+  const changedPostCode = useRef();
 
   useEffect(() => {
     if (stopTwiceRequest.current) {
@@ -45,6 +53,7 @@ const AddUserForm = (props) => {
   }, [loading]);
 
   const validationForInput = (value) => value.trim() !== "";
+
   const {
     value: firstName,
     isValid: firstNameIsValid,
@@ -134,46 +143,56 @@ const AddUserForm = (props) => {
     formIsValid = true;
   }
 
-  const firstNameInputClasses = firstNameInputHasError
-    ? classes["invalid"]
-    : "";
-  const lastNameInputClasses = lastNameInputHasError ? classes["invalid"] : "";
-  const contactNumberInputClasses = contactNumberInputHasError
-    ? classes["invalid"]
-    : "";
-  const address1InputClasses = address1InputHasError ? classes["invalid"] : "";
-  const address2InputClasses = address2InputHasError ? classes["invalid"] : "";
-  const townInputClasses = townInputHasError ? classes["invalid"] : "";
-  const regionInputClasses = regionInputHasError ? classes["invalid"] : "";
-  const countryInputClasses = countryInputHasError ? classes["invalid"] : "";
-  const postCodeInputClasses = postCodeInputHasError ? classes["invalid"] : "";
+  const firstNameInputClasses =
+    firstNameInputHasError && !changedFirstName.current.value
+      ? classes["invalid"]
+      : "";
+  const lastNameInputClasses =
+    lastNameInputHasError && !changedLastName.current.value
+      ? classes["invalid"]
+      : "";
+  const contactNumberInputClasses =
+    contactNumberInputHasError && !changedContactNumber.current.value
+      ? classes["invalid"]
+      : "";
+  const address1InputClasses =
+    address1InputHasError && !changedAddress1.current.value
+      ? classes["invalid"]
+      : "";
+  const address2InputClasses =
+    address2InputHasError && !changedAddress2.current.value
+      ? classes["invalid"]
+      : "";
+  const townInputClasses =
+    townInputHasError && !changedTown.current.value ? classes["invalid"] : "";
+  const regionInputClasses =
+    regionInputHasError && !changedRegion.current.value
+      ? classes["invalid"]
+      : "";
+  const countryInputClasses =
+    countryInputHasError && !changedCountry.current.value
+      ? classes["invalid"]
+      : "";
+  const postCodeInputClasses =
+    postCodeInputHasError && !changedPostCode.current.value
+      ? classes["invalid"]
+      : "";
 
   async function fetchData() {
+    const userData = {
+      firstName: firstName,
+      lastName: lastName,
+      address1: address1,
+      address2: address2,
+      town: town,
+      region: region,
+      country: country,
+      postCode: postCode,
+      contactNumber: contactNumber,
+    };
     if (userId) {
-      const updatedDate = {
-        firstName: firstName,
-        lastName: lastName,
-        address1: address1,
-        address2: address2,
-        town: town,
-        region: region,
-        country: country,
-        postCode: postCode,
-        contactNumber: contactNumber,
-      };
-      dispatch(updateUser(updatedDate, userId));
+      dispatch(updateUser(userData, userId));
     } else {
-      const userData = {
-        firstName: firstName,
-        lastName: lastName,
-        address1: address1,
-        address2: address2,
-        town: town,
-        region: region,
-        country: country,
-        postCode: postCode,
-        contactNumber: contactNumber,
-      };
       dispatch(addUser(userData));
     }
   }
@@ -201,6 +220,15 @@ const AddUserForm = (props) => {
       resetRegionInput();
       resetCountryInput();
       resetPostCodeInput();
+      changedFirstName.current.value = "";
+      changedLastName.current.value = "";
+      changedAddress1.current.value = "";
+      changedAddress2.current.value = "";
+      changedContactNumber.current.value = "";
+      changedCountry.current.value = "";
+      changedTown.current.value = "";
+      changedRegion.current.value = "";
+      changedPostCode.current.value = "";
     }
   };
 
@@ -217,7 +245,7 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={firstNameInputClasses}>
                     <Input
-                      ref={newVal}
+                      ref={changedFirstName}
                       label="First Name"
                       input={{
                         id: "firstName",
@@ -230,16 +258,17 @@ const AddUserForm = (props) => {
                       }}
                     />
                   </div>
-                  {firstNameInputHasError && (
-                    <p className={classes.error}>
-                      First Name must not be empty !
-                    </p>
-                  )}
+                  {firstNameInputHasError &&
+                    !changedFirstName.current.value && (
+                      <p className={classes.error}>
+                        First Name must not be empty !
+                      </p>
+                    )}
                 </div>
                 <div className={classes["input-flex"]}>
                   <div className={lastNameInputClasses}>
                     <Input
-                      ref={newVal}
+                      ref={changedLastName}
                       label="Last Name"
                       input={{
                         id: "lastName",
@@ -252,7 +281,7 @@ const AddUserForm = (props) => {
                       }}
                     />
                   </div>
-                  {lastNameInputHasError && (
+                  {firstNameInputHasError && !changedLastName.current.value && (
                     <p className={classes.error}>
                       First Name must not be empty !
                     </p>
@@ -263,7 +292,7 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={address1InputClasses}>
                     <Input
-                      ref={newVal}
+                      ref={changedAddress1}
                       label="Address 1"
                       input={{
                         id: "address1",
@@ -276,7 +305,7 @@ const AddUserForm = (props) => {
                       }}
                     />
                   </div>
-                  {address1InputHasError && (
+                  {address1InputHasError && !changedAddress1.current.value && (
                     <p className={classes.error}>
                       Address 1 must not be empty !
                     </p>
@@ -285,7 +314,7 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={address2InputClasses}>
                     <Input
-                      ref={newVal}
+                      ref={changedAddress2}
                       label="Address 2"
                       input={{
                         id: "address2",
@@ -298,7 +327,7 @@ const AddUserForm = (props) => {
                       }}
                     />
                   </div>
-                  {address2InputHasError && (
+                  {address2InputHasError && !changedAddress2.current.value && (
                     <p className={classes.error}>
                       Address 2 must not be empty !
                     </p>
@@ -309,7 +338,7 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={townInputClasses}>
                     <Input
-                      ref={newVal}
+                      ref={changedTown}
                       label="Town"
                       input={{
                         id: "town",
@@ -320,14 +349,14 @@ const AddUserForm = (props) => {
                       }}
                     />
                   </div>
-                  {townInputHasError && (
+                  {townInputHasError && !changedTown.current.value && (
                     <p className={classes.error}>Town must not be empty !</p>
                   )}
                 </div>
                 <div className={classes["input-flex"]}>
                   <div className={regionInputClasses}>
                     <Input
-                      ref={newVal}
+                      ref={changedRegion}
                       label="Region"
                       input={{
                         id: "region",
@@ -338,7 +367,7 @@ const AddUserForm = (props) => {
                       }}
                     />
                   </div>
-                  {regionInputHasError && (
+                  {regionInputHasError && !changedRegion.current.value && (
                     <p className={classes.error}>Region must not be empty !</p>
                   )}
                 </div>
@@ -347,7 +376,7 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={countryInputClasses}>
                     <Input
-                      ref={newVal}
+                      ref={changedCountry}
                       label="Country"
                       input={{
                         id: "country",
@@ -360,14 +389,14 @@ const AddUserForm = (props) => {
                       }}
                     />
                   </div>
-                  {countryInputHasError && (
+                  {countryInputHasError && !changedCountry.current.value && (
                     <p className={classes.error}>Country must not be empty !</p>
                   )}
                 </div>
                 <div className={classes["input-flex"]}>
                   <div className={postCodeInputClasses}>
                     <Input
-                      ref={newVal}
+                      ref={changedPostCode}
                       label="Post Code"
                       input={{
                         id: "postCode",
@@ -380,7 +409,7 @@ const AddUserForm = (props) => {
                       }}
                     />
                   </div>
-                  {postCodeInputHasError && (
+                  {postCodeInputHasError && !changedPostCode.current.value && (
                     <p className={classes.error}>
                       Post Code must not be empty !
                     </p>
@@ -391,7 +420,7 @@ const AddUserForm = (props) => {
                 <div className={classes["input-flex"]}>
                   <div className={contactNumberInputClasses}>
                     <Input
-                      ref={newVal}
+                      ref={changedContactNumber}
                       label="Contact Number"
                       input={{
                         id: "contactNumber",
@@ -404,11 +433,12 @@ const AddUserForm = (props) => {
                       }}
                     />
                   </div>
-                  {contactNumberInputHasError && (
-                    <p className={classes.error}>
-                      Contact Number must not be empty !
-                    </p>
-                  )}
+                  {contactNumberInputHasError &&
+                    !changedContactNumber.current.value && (
+                      <p className={classes.error}>
+                        Contact Number must not be empty !
+                      </p>
+                    )}
                 </div>
               </div>
               <div className={classes["actions-wrapper"]}>

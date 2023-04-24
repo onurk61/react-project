@@ -20,7 +20,7 @@ const inputStateReducer = (state, action) => {
       isTouched: false,
     };
   }
-
+  
   return inputStateReducer;
 };
 
